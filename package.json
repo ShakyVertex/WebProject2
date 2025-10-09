@@ -1,0 +1,45 @@
+{
+  "name": "adboost-platform",
+  "version": "1.0.0",
+  "description": "AdBoost - Web-based Merchant Advertisement Management Platform",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "setup-db": "mongosh < database/setup.js",
+    "seed-db": "mongosh < database/seed.js"
+  },
+  "keywords": [
+    "advertising",
+    "management",
+    "platform",
+    "express",
+    "mongodb",
+    "vanilla-js"
+  ],
+  "author": "Kangning Li",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mongodb": "^6.3.0",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "prettier": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdBoost - Dashboard</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">AdBoost</div>
+            <div class="user-info">
+                <div class="credits-display">
+                    <span id="userCredits">0</span> Credits
+                </div>
+                <span id="username">Loading...</span>
+                <button class="btn btn-secondary btn-small" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-tabs">
+        <div class="nav-tabs-content">
+            <button class="nav-tab active" data-tab="dashboard">Dashboard</button>
+            <button class="nav-tab" data-tab="ads">Ad Management</button>
+            <button class="nav-tab" data-tab="transactions">Transactions</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalAds">0</div>
+                    <div class="stat-label">Total Ads</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activeAds">0</div>
+                    <div class="stat-label">Active Ads</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalImpressions">0</div>
+                    <div class="stat-label">Total Impressions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalClicks">0</div>
+                    <div class="stat-label">Total Clicks</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Credit Management</h2>
+                </div>
+                <div class="flex justify-between align-center mb-2">
+                    <div>
+                        <p>Current Balance: <strong id="dashboardCredits">0</strong> Credits</p>
+                        <p class="text-gray">Use credits to activate advertisement campaigns</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="showRechargeModal()">Recharge Credits</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Activity</h2>
+                </div>
+                <div id="recentActivity">
+                    <div class="loading">Loading recent activity...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ads Management Tab -->
+        <div id="ads-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Advertisement Campaigns</h2>
+                    <button class="btn btn-primary" onclick="showCreateAdModal()">Create New Ad</button>
+                </div>
+                <div id="adsList">
+                    <div class="loading">Loading advertisements...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Tab -->
+        <div id="transactions-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Transaction History</h2>
+                </div>
+                <div id="transactionsList">
+                    <div class="loading">Loading transactions...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Ad Modal -->
+    <div id="createAdModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Advertisement</h3>
+                <button class="modal-close" onclick="hideCreateAdModal()">&times;</button>
+            </div>
+            <form id="createAdForm">
+                <div class="form-group">
+                    <label class="form-label" for="adTitle">Campaign Title</label>
+                    <input type="text" id="adTitle" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="adType">Advertisement Type</label>
+                    <select id="adType" class="form-select" required onchange="toggleAdFields()">
+                        <option value="">Select Type</option>
+                        <option value="ECOMMERCE">E-commerce Link (10 credits/day)</option>
+                        <option value="APP">App Download (15 credits/day)</option>
+                        <option value="BANNER">Web Banner (20 credits/day)</option>
+                    </select>
+                </div>
+                <div class="form-group" id="targetUrlGroup">
+                    <label class="form-label" for="targetUrl">Target URL</label>
+                    <input type="url" id="targetUrl" class="form-input">
+                </div>
+                <div class="form-group hidden" id="bannerImageGroup">
+                    <label class="form-label" for="bannerImageUrl">Banner Image URL</label>
+                    <input type="url" id="bannerImageUrl" class="form-input">
+                </div>
+                <div class="form-group hidden" id="appStoreGroup">
+                    <label class="form-label" for="appStoreUrl">App Store URL</label>
+                    <input type="url" id="appStoreUrl" class="form-input">
+                </div>
+                <div class="form-group hidden" id="googlePlayGroup">
+                    <label class="form-label" for="googlePlayUrl">Google Play URL</label>
+                    <input type="url" id="googlePlayUrl" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="budgetCredits">Budget (Credits)</label>
+                    <input type="number" id="budgetCredits" class="form-input" min="0">
+                </div>
+                <div class="flex gap-2">
+                    <button type="button" class="btn btn-secondary" onclick="hideCreateAdModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Ad</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Recharge Modal -->
+    <div id="rechargeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Recharge Credits</h3>
+                <button class="modal-close" onclick="hideRechargeModal()">&times;</button>
+            </div>
+            <form id="rechargeForm">
+                <div class="form-group">
+                    <label class="form-label" for="rechargeAmount">Amount (Credits)</label>
+                    <input type="number" id="rechargeAmount" class="form-input" min="1" required>
+                </div>
+                <p class="text-gray mb-2">Note: This is a simulated purchase. No real payment required.</p>
+                <div class="flex gap-2">
+                    <button type="button" class="btn btn-secondary" onclick="hideRechargeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Purchase Credits</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ad Preview Modal -->
+    <div id="adPreviewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Advertisement Preview</h3>
+                <button class="modal-close" onclick="hideAdPreviewModal()">&times;</button>
+            </div>
+            <div id="adPreviewContent">
+                <!-- Ad preview content will be inserted here -->
+            </div>
+            <div class="flex gap-2 mt-3">
+                <button type="button" class="btn btn-secondary" onclick="hideAdPreviewModal()">Close</button>
+                <button type="button" class="btn btn-primary" onclick="simulateAdClick()">Simulate Click</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="message" class="hidden"></div>
+
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/ads.js"></script>
+    <script src="/js/transactions.js"></script>
+</body>
+</html>
