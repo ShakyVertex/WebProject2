@@ -11,7 +11,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "setup-db": "mongosh < database/setup.js",
-    "seed-db": "mongosh < database/seed.js"
+    "seed-db": "mongosh < database/seed.js",
+    "view-db": "mongosh < database/view-data.js"
   },
   "keywords": [
     "advertising",
