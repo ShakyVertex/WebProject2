@@ -205,6 +205,7 @@ app.get('/api/ads', requireAuth, async(req, res) => {
 
 app.post('/api/ads', requireAuth, async(req, res) => {
   try {
+    const { ObjectId } = await import('mongodb');
     const { title, type, targetUrl, bannerImageUrl, appStoreUrl, googlePlayUrl, budgetCredits } = req.body;
 
     // Validate required fields
