@@ -177,8 +177,9 @@ app.post('/api/logout', (req, res) => {
 // User info route
 app.get('/api/user', requireAuth, async(req, res) => {
   try {
+    const { ObjectId } = await import('mongodb');
     const user = await db.collection('merchants').findOne(
-      { _id: req.session.user.id },
+      { _id: new ObjectId(req.session.user.id) },
       { projection: { password_hash: 0 } }
     );
     res.json(user);
@@ -191,8 +192,9 @@ app.get('/api/user', requireAuth, async(req, res) => {
 // Ads routes
 app.get('/api/ads', requireAuth, async(req, res) => {
   try {
+    const { ObjectId } = await import('mongodb');
     const ads = await db.collection('ads').find({
-      merchantId: req.session.user.id
+      merchantId: new ObjectId(req.session.user.id)
     }).sort({ createdAt: -1 }).toArray();
     res.json(ads);
   } catch (error) {
@@ -218,7 +220,7 @@ app.post('/api/ads', requireAuth, async(req, res) => {
     }[type];
 
     const newAd = {
-      merchantId: req.session.user.id,
+      merchantId: new ObjectId(req.session.user.id),
       title,
       type,
       status: 'draft',
@@ -252,14 +254,14 @@ app.post('/api/ads/:id/activate', requireAuth, async(req, res) => {
     // Get ad and user info
     const ad = await db.collection('ads').findOne({
       _id: new ObjectId(adId),
-      merchantId: req.session.user.id
+      merchantId: new ObjectId(req.session.user.id)
     });
 
     if (!ad) {
       return res.status(404).json({ error: 'Ad not found' });
     }
 
-    const user = await db.collection('merchants').findOne({ _id: req.session.user.id });
+    const user = await db.collection('merchants').findOne({ _id: new ObjectId(req.session.user.id) });
 
     if (user.credits < ad.costPerDay) {
       return res.status(400).json({ error: 'Insufficient credits' });
@@ -280,13 +282,13 @@ app.post('/api/ads/:id/activate', requireAuth, async(req, res) => {
     // Deduct credits
     const newBalance = user.credits - ad.costPerDay;
     await db.collection('merchants').updateOne(
-      { _id: req.session.user.id },
+      { _id: new ObjectId(req.session.user.id) },
       { $set: { credits: newBalance, updatedAt: new Date() } }
     );
 
     // Record transaction
     await db.collection('transactions').insertOne({
-      merchantId: req.session.user.id,
+      merchantId: new ObjectId(req.session.user.id),
       adId: new ObjectId(adId),
       type: 'AD_ACTIVATE',
       amount: -ad.costPerDay,
@@ -310,7 +312,7 @@ app.delete('/api/ads/:id', requireAuth, async(req, res) => {
 
     const result = await db.collection('ads').deleteOne({
       _id: new ObjectId(adId),
-      merchantId: req.session.user.id
+      merchantId: new ObjectId(req.session.user.id)
     });
 
     if (result.deletedCount === 0) {
@@ -366,8 +368,9 @@ app.post('/api/ads/:id/click', async(req, res) => {
 // Transactions routes
 app.get('/api/transactions', requireAuth, async(req, res) => {
   try {
+    const { ObjectId } = await import('mongodb');
     const transactions = await db.collection('transactions').find({
-      merchantId: req.session.user.id
+      merchantId: new ObjectId(req.session.user.id)
     }).sort({ createdAt: -1 }).toArray();
     res.json(transactions);
   } catch (error) {
@@ -380,23 +383,24 @@ app.get('/api/transactions', requireAuth, async(req, res) => {
 app.post('/api/recharge', requireAuth, async(req, res) => {
   try {
     const { amount } = req.body;
+    const { ObjectId } = await import('mongodb');
 
     if (!amount || amount <= 0) {
       return res.status(400).json({ error: 'Invalid amount' });
     }
 
-    const user = await db.collection('merchants').findOne({ _id: req.session.user.id });
+    const user = await db.collection('merchants').findOne({ _id: new ObjectId(req.session.user.id) });
     const newBalance = user.credits + amount;
 
     // Update user credits
     await db.collection('merchants').updateOne(
-      { _id: req.session.user.id },
+      { _id: new ObjectId(req.session.user.id) },
       { $set: { credits: newBalance, updatedAt: new Date() } }
     );
 
     // Record transaction
     await db.collection('transactions').insertOne({
-      merchantId: req.session.user.id,
+      merchantId: new ObjectId(req.session.user.id),
       type: 'CREDIT_RECHARGE',
       amount,
       balanceAfter: newBalance,

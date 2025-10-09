@@ -9,7 +9,7 @@ let currentAdId = null;
 // Load ads data when ads tab is active
 async function loadAdsData() {
   try {
-    const response = await fetch('/api/ads');
+    const response = await fetch('/api/ads', { credentials: 'include' });
 
     if (!response.ok) {
       throw new Error('Failed to load ads');
@@ -169,6 +169,7 @@ document.getElementById('createAdForm').addEventListener('submit', async functio
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify(formData)
     });
 

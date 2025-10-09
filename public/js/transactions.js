@@ -6,7 +6,7 @@
 // Load transactions data when transactions tab is active
 async function loadTransactionsData() {
   try {
-    const response = await fetch('/api/transactions');
+    const response = await fetch('/api/transactions', { credentials: 'include' });
 
     if (!response.ok) {
       throw new Error('Failed to load transactions');

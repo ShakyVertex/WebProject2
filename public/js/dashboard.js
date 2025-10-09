@@ -56,7 +56,7 @@ function switchTab(tabName) {
 // Load user data
 async function loadUserData() {
   try {
-    const response = await fetch('/api/user');
+    const response = await fetch('/api/user', { credentials: 'include' });
 
     if (!response.ok) {
       if (response.status === 401) {
@@ -86,14 +86,14 @@ function updateUserDisplay() {
 async function loadDashboardData() {
   try {
     // Load ads for statistics
-    const adsResponse = await fetch('/api/ads');
+    const adsResponse = await fetch('/api/ads', { credentials: 'include' });
     if (adsResponse.ok) {
       userAds = await adsResponse.json();
       updateDashboardStats();
     }
 
     // Load recent transactions
-    const transactionsResponse = await fetch('/api/transactions');
+    const transactionsResponse = await fetch('/api/transactions', { credentials: 'include' });
     if (transactionsResponse.ok) {
       userTransactions = await transactionsResponse.json();
       updateRecentActivity();
@@ -187,6 +187,7 @@ document.getElementById('rechargeForm').addEventListener('submit', async functio
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({ amount })
     });
 
@@ -231,7 +232,8 @@ function hideMessage() {
 async function logout() {
   try {
     const response = await fetch('/api/logout', {
-      method: 'POST'
+      method: 'POST',
+      credentials: 'include'
     });
 
     if (response.ok) {

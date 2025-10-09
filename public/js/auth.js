@@ -62,6 +62,7 @@ async function handleLogin(event) {
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({ username, password })
     });
 
@@ -109,6 +110,7 @@ async function handleRegister(event) {
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({ username, email, password })
     });
 
@@ -155,7 +157,8 @@ function hideMessage() {
 async function logout() {
   try {
     const response = await fetch('/api/logout', {
-      method: 'POST'
+      method: 'POST',
+      credentials: 'include'
     });
 
     if (response.ok) {
