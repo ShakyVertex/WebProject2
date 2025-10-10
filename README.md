@@ -4,9 +4,11 @@ A web-based platform that enables merchants to manage and activate their own onl
 
 ## Author
 **Kangning Li**
+**Kewen Xu**
 
 ## Class Link
 CS5600 - Web Development
+https://johnguerra.co/classes/webDevelopment_online_fall_2025/Links to an external site.
 
 ## Project Objective
 Build a comprehensive advertisement management platform where merchants can:

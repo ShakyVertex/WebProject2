@@ -257,6 +257,39 @@ body {
   font-size: 0.9rem;
 }
 
+.btn-outline {
+  background-color: transparent;
+  color: var(--pure-white);
+  border: 1px solid var(--primary-khaki);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-khaki);
+  color: var(--primary-black);
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.github-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.github-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.github-btn:hover svg {
+  transform: scale(1.1);
+}
+
 /* Tables */
 .table {
   width: 100%;
