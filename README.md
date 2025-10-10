@@ -3,12 +3,12 @@
 A web-based platform that enables merchants to manage and activate their own online advertisement campaigns using a credit-based system.
 
 ## Author
-**Kangning Li**
-**Kewen Xu**
+1. Kangning Li
+2. Kewen Xu
 
 ## Class Link
-CS5600 - Web Development
-https://johnguerra.co/classes/webDevelopment_online_fall_2025/Links to an external site.
+CS5610 - Web Development
+https://johnguerra.co/classes/webDevelopment_online_fall_2025/
 
 ## Project Objective
 Build a comprehensive advertisement management platform where merchants can:
