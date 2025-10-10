@@ -45,6 +45,14 @@ Build a comprehensive advertisement management platform where merchants can:
 
 *Main dashboard showing campaign statistics and credit management*
 
+## Project Link
+
+🌐 **Live Demo**: [http://47.252.30.228:3000/](http://47.252.30.228:3000/)
+
+**Test Account**:
+- Username: `testUser`
+- Password: `test123`
+
 ## Tech Stack
 
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6 modules)
@@ -134,12 +142,70 @@ Build a comprehensive advertisement management platform where merchants can:
 - `POST /api/recharge` - Recharge credits
 - `GET /api/transactions` - Get transaction history
 
-## Database Schema
+## Database Design
 
-### Collections
-- **merchants**: User accounts and credit balances
-- **ads**: Advertisement campaigns and metrics
-- **transactions**: Credit transaction history
+### Collections Overview
+
+#### 1. **merchants** Collection
+```javascript
+{
+  _id: ObjectId,
+  username: String (unique, indexed),
+  email: String (unique, indexed),
+  password_hash: String,
+  credits: Number (default: 100),
+  role: String (default: 'merchant'),
+  status: String (default: 'active', indexed),
+  createdAt: Date (indexed),
+  updatedAt: Date,
+  lastLoginAt: Date
+}
+```
+
+#### 2. **ads** Collection
+```javascript
+{
+  _id: ObjectId,
+  merchantId: ObjectId (indexed),
+  title: String,
+  type: String, // 'ECOMMERCE', 'APP', 'BANNER'
+  status: String (indexed), // 'draft', 'active', 'paused'
+  targetUrl: String,
+  bannerImageUrl: String,
+  appStoreUrl: String,
+  googlePlayUrl: String,
+  costPerDay: Number, // 10/15/20 based on type
+  budgetCredits: Number,
+  metrics: {
+    impressions: Number (default: 0),
+    clicks: Number (default: 0)
+  },
+  createdAt: Date (indexed),
+  updatedAt: Date,
+  startDate: Date
+}
+```
+
+#### 3. **transactions** Collection
+```javascript
+{
+  _id: ObjectId,
+  merchantId: ObjectId (indexed),
+  adId: ObjectId (optional, indexed),
+  type: String, // 'CREDIT_RECHARGE', 'AD_ACTIVATE'
+  amount: Number, // positive for recharge, negative for spending
+  balanceAfter: Number,
+  note: String,
+  source: String, // 'user', 'system'
+  createdAt: Date (indexed)
+}
+```
+
+### Key Features
+- **Indexing**: Optimized queries with strategic indexes on frequently searched fields
+- **Validation**: Schema validation ensures data integrity
+- **Relationships**: Proper foreign key relationships between collections
+- **Performance**: Compound indexes for complex queries
 
 See `database/setup.js` for detailed schema definitions.
 
@@ -182,6 +248,16 @@ npm run seed-db
 ├── .prettierrc           # Prettier configuration
 └── README.md             # This file
 ```
+
+## LLM Use
+
+This project utilized Large Language Models to enhance development efficiency and documentation quality:
+
+### **Claude Sonnet 4**
+- **Project Framework Setup**: Used for initial project architecture design and scaffolding
+
+### **ChatGPT-5**
+- **Documentation Writing**: Used for creating comprehensive documentation and README content
 
 ## License
 MIT License - see LICENSE file for details
