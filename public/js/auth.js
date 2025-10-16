@@ -56,6 +56,9 @@ async function handleLogin(event) {
     return;
   }
 
+// since you have all you frontend stuff here it would be nice if you could disable either 
+// signup or login button which would avodi sending repeated requests
+  
   try {
     const response = await fetch('/api/login', {
       method: 'POST',
