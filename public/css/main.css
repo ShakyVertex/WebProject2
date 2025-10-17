@@ -1,6 +1,7 @@
 /* AdBoost Platform - Main Stylesheet */
 /* Color Scheme: Black, Khaki, White */
 
+/* Nice use of root and resetting everything but still would change this little thing as its common practice as well*/
 :root {
   --primary-black: #1a1a1a;
   --secondary-black: #2d2d2d;
@@ -16,7 +17,7 @@
   --warning-orange: #ff9800;
 }
 
-* {
+*, ::before, ::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
