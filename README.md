@@ -252,10 +252,6 @@ npm run seed-db
 └── README.md             # This file
 ```
 
-## LLM Use
-
-This project utilized Large Language Models to enhance development efficiency and documentation quality:
-
 ### **Claude Sonnet 4**
 - **Project Framework Setup**: Used for initial project architecture design and scaffolding
 
