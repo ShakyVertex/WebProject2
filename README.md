@@ -43,6 +43,8 @@ Build a comprehensive advertisement management platform where merchants can:
 
 ![Dashboard Screenshot](https://via.placeholder.com/800x400/c3b091/1a1a1a?text=AdBoost+Dashboard)
 
+https://i.ibb.co/bM5pYzDp/thumbnail.png
+
 *Main dashboard showing campaign statistics and credit management*
 
 ## Project Link
