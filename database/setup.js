@@ -2,7 +2,9 @@
  * MongoDB Database Setup Script for AdBoost Platform
  * This script creates the database and collections with proper indexes
  */
-
+/** 
+* Comprehensive schema validation with $jsonSchema validators for all collections
+*/
 // Database name
 const dbName = 'adboost';
 
