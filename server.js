@@ -8,7 +8,12 @@ import { dirname, join } from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
+/**
+* Every credit movement is logged (positive and negative amounts)
+* Balance snapshot stored with each transaction (balanceAfter)
+* Detailed context (transaction type, source, notes, related ad ID)
+* Fast queries with proper indexing
+*/
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
