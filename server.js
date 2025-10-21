@@ -40,6 +40,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(join(__dirname, 'public')));
 
+// Problem: Fallback to hardcoded secret is insecure. If leaked, all sessions can be forged
 // Session configuration
 app.use(session({
   secret: process.env.SESSION_SECRET || 'adboost-secret-key-2024',
@@ -133,6 +134,8 @@ app.post('/api/register', async(req, res) => {
   }
 });
 
+// Problem: Unlimited login attempts allow brute-force attacks.
+// could add rate limitation
 app.post('/api/login', async(req, res) => {
   try {
     const { username, password } = req.body;
